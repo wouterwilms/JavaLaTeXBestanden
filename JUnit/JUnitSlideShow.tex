@@ -1,0 +1,235 @@
+\documentclass{beamer}
+
+\usepackage{verbatim}
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{dolphin}
+
+%\setbeamertemplate{footline}[page number]
+
+\setbeamertemplate{navigation symbols}{}
+
+\title{JUnit}
+\author{Java Cursisten}
+\institute{INTEC Brussel}
+\date{\today}
+
+
+\begin{document}
+
+
+\begin{frame}
+
+\titlepage
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Overzicht}
+\tableofcontents
+
+\end{frame}
+
+
+\section{Inleiding}
+
+
+\begin{frame}
+
+\frametitle{We hebben alles al getest...}
+
+{\Large Alle code wordt getest\\~\\
+Nadat we een stukje code geschreven hebben runnen we het programma en doen onze \textit{'acceptance test'}.\\~\\
+\textit{'We code, we compile, we run and we test... over and over again.'}}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Wat is JUnit}
+
+\begin{itemize}
+
+\item {\LARGE JUnit is een framework}
+\item {\LARGE de facto standaard voor het testen van Java applicaties}
+\item {\LARGE Wij gebruiken versie 4.x}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Framework?}
+
+{\Large Een framework is een semi-complete applicatie.\\~\\
+Het biedt een herbruikbare, algemene structuur die gedeeld wordt tussen applicaties.\\~\\
+Ontwikkelaars incorporeren zo een framework in hun applicatie en passen het aan aan de
+specifieke noden van hun applicatie.}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Testen en testen zijn drie...}
+
+\begin{enumerate}
+
+\item {\Large Unit test: een afgescheiden eenheid werk (veelal \'e\'en methode) }
+\item {\Large Functional test: een bepaalde functionaliteit (samenwerking tussen units)}
+\item {\Large Integration test: een heel systeem (samenwerking tussen \textbf{meer} units)}
+  
+\end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Waarom JUnit gebruiken?}
+
+\begin{itemize}
+
+\item {\LARGE Geautomatiseerde testen voor een ge\"isoleerd stukje code}
+\item {\LARGE Controleren of de code de verwachte output geeft bij een bepaalde input}
+\item {\LARGE Ze 'verzekeren' dat de nieuwe code werkt}
+\item {\LARGE Ze 'verzekeren' dat de oude code werkt}
+\item {\LARGE Debuggen is makkelijker}
+\item {\LARGE Ze bieden een soort documentatie aan}
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Robert C Martin}
+
+\begin{center}
+{\huge \textit{'Any program feature without an automated test doesn't exist.'}}
+\end{center}
+
+% \begin{figure}
+% 
+% \includegraphics[width=100pt]{RobertMartin.jpg}
+% 
+% \label{Robert C Martin}
+% 
+% \end{figure}
+
+\end{frame}
+
+
+\section{JUnit in Eclipse}
+
+\begin{frame}
+
+\frametitle{JUnit in Eclipse}
+
+\begin{center}
+{\huge DEMO}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{opdracht}
+
+\begin{center}
+{\Large Maak een calculator applicatie met methodes voor}
+\end{center}
+
+\begin{itemize}
+\item {\Large add}
+\item {\Large substract}
+\item {\Large multiply}
+\item {\Large divide}
+\item {\Large root}
+\end{itemize}
+
+\begin{center}
+{\Large Maak ook een test voor elke methode want...}
+\end{center}
+
+% \begin{figure}
+% 
+% \includegraphics[width=60pt]{RobertMartin.png}
+% 
+% \end{figure}
+
+\begin{center}
+\textit{{\LARGE 'We will not ship shit!'}}
+\end{center}
+
+\end{frame}
+
+
+\section{The life and death of the Tests}
+
+
+\begin{frame}
+
+\frametitle{The life and death of the Tests}
+
+{\Large In JUnit zit een \textit{testrunner} die al de testen zal uitvoeren.\\~\\
+De testrunner gaat op zoek naar al de methodes met de annotatie \textbf{'@Test'}.\\~\\
+Voor iedere testmethode in een klasse wordt er een nieuw object van die klasse 
+ge\"instantieerd zodat de testmethodes geen invloed op elkaar kunnen uitoefenen.}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Reducing boilerplate code}
+
+{\Large Met \textbf{'@Before'} en \textbf{'@After'} kan je methodes annoteren die dan voor of na de elke test
+in de klasse worden uitgevoerd.\\~\\
+
+Met \textbf{'@BeforeClass'} en \textbf{'@AfterClass'} kan je statische methoden annoteren die voor en
+na de reeks testen in de klasse worden uitgevoerd.\\~\\
+
+Met \textbf{'@Ignore'} kan je tijdelijk een test uitschakelen.}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{\textbf{@Before @After @BeforeClass @AfterClass @Ignore}}
+
+\begin{center}
+{\huge DEMO}
+\end{center}
+
+\end{frame}
+
+
+\section{Assert ! Assert ! Assert ?}
+
+
+\begin{frame}
+
+\frametitle{Assert... \href{http://junit.sourceforge.net/javadoc/}{\textbf{{\small Klik hier voor de JUnit API}}}}
+
+\begin{itemize}
+
+  \item {\Large assertEquals ( type expected, type actual )}
+  \item {\Large assertTrue ( boolean condition )}
+  \item {\Large assertNull ( Object obj )}
+  \item {\Large assertNotNull ( Object obj )}
+  \item {\Large assertSame ( Object expected, Object actual )}
+  \item {\Large assertNotSame ( Object expected, Object actual )}
+   
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}
