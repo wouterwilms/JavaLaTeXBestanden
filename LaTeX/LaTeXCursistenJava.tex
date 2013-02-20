@@ -1,0 +1,152 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Large Colored Title Article
+% LaTeX Template
+% Version 1.1 (25/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=12pt, onecolumn]{scrartcl}
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage[svgnames]{xcolor} % Enabling colors by their 'svgnames'
+\usepackage{fix-cm}	 % Custom font sizes - used for the initial letter in the document
+\usepackage{verbatim}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+\usepackage[latin1]{inputenc}
+\usepackage{sectsty} % Enables custom section titles
+\usepackage{advdate}
+\allsectionsfont{\usefont{OT1}{phv}{b}{n}} % Change the font of all section commands
+\usepackage{fancyhdr} % Needed to define custom headers/footers
+\pagestyle{fancy} % Enables the custom headers/footers
+\usepackage{lastpage} % Used to determine the number of pages in the document (for "Page X of Total")
+
+% Headers - all currently empty
+\lhead{}
+\chead{}
+\rhead{}
+
+% Footers
+\lfoot{}
+\cfoot{}
+\rfoot{\footnotesize Page \thepage\ of \pageref{LastPage}} % "Page 1 of 2"
+
+\renewcommand{\headrulewidth}{0.0pt} % No header rule
+\renewcommand{\footrulewidth}{0.4pt} % Thin footer rule
+
+\usepackage{lettrine} % Package to accentuate the first letter of the text
+\newcommand{\initial}[1]{ % Defines the command and style for the first letter
+\lettrine[lines=3,lhang=0.3,nindent=0em]{
+\color{DarkBlue}
+{\textsf{#1}}}{}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\usepackage{titling} % Allows custom title configuration
+
+\newcommand{\HorRule}{\color{DarkBlue} \rule{\linewidth}{1pt}} % Defines the gold horizontal rule around the title
+
+\pretitle{\vspace{-30pt} \begin{flushleft} \HorRule \fontsize{50}{50} \usefont{OT1}{phv}{b}{n} \color{DarkBlue} \selectfont} % Horizontal rule before the title
+
+
+\title{The Art of Computer Programming, \\\TeX\ en \LaTeX} 
+
+
+\posttitle{\par\end{flushleft}\vskip 0.5em} % Whitespace under the title
+
+\preauthor{\begin{flushleft}\large \lineskip 0.5em \usefont{OT1}{phv}{b}{sl} \color{DarkBlue}} % Author font configuration
+
+\author{Java Cursisten, } % Your name
+
+
+\postauthor{\footnotesize \usefont{OT1}{phv}{m}{sl} \color{Black} % Configuration for the institution name
+INTEC Brussel % Your institution
+
+
+
+\par\end{flushleft}\HorRule} % Horizontal rule after the title
+
+
+
+
+\date{\today} % Add a date here if you would like one to appear underneath the title block
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+\thispagestyle{fancy} % Enabling the custom headers/footers for the first page 
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+% The first character should be within \initial{}
+\initial{D}\textbf{onald Knuth is een levende legende in de computerwetenschappen. Zijn faam heeft hij onder meer te danken aan zijn diepzinnig werk over algoritmes genaamd \textit{The Art of Computer Programming}. Het eerste volume van dit boek werd in 1969 gepubliceerd en werd nog met een mechanische methode gezet (de eerste stap uit de boekdrukkunst). Dit resulteerde in een mooie klassieke opmaak. Bij de publicatie van het tweede volume was Donald Knuth ontevreden met het resultaat van de modernere foto\-grafische methode. Als een legendarische programmeur ontrevreden achter\-blijft omwille van ontoereikende me\-thodes maakt hij gewoon zelf een betere me\-thode. \TeX\ werd in 1978 uitgebracht. }
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+\section*{WYSIWYM}
+
+\TeX\ (\begin{tiny}uitgesproken als\end{tiny} \begin{small}\textit{'tech'}\end{small}) is een markup-taal die kan gebruikt worden om documenten (artikels, boeken, slideshows, \textbf{brieven}, \textbf{CV's},...) vorm te geven. In tegenstelling tot de meer gebruikelijke werkwijze van office suites (What You See Is What You Get) streeft \TeX\ de filosofie \textit{'\textbf{W}hat \textbf{Y}ou \textbf{S}ee \textbf{I}s \textbf{W}hat \textbf{Y}ou \textbf{M}ean'} na. Op die manier kan de auteur van het werk zich meer concentreren op de inhoud van zijn werk in plaats van op de opmaak ervan. Om dit doel nog beter na te streven is er in 1984 \LaTeX\ uitgebracht. \LaTeX\ is een superset van \TeX\ en biedt de gebruiker een heel pakket macro's aan zodat deze afgeschermd wordt van de (nog) meer esoterische \TeX\ code.
+
+\subsection*{commando's}
+
+Net zoals bij HTML wordt er gebruik gemaakt van tags om aan te geven hoe een bepaald tekstonderdeel dient opgemaakt te worden. In \LaTeX\ noemen we die \textit{'tags'} meestal commando's. Om even een concreet voorbeeld te geven volgt hier de code die een lijst voordelen van \LaTeX\ weergeeft. 
+
+\begin{verbatim}
+\begin{itemize}
+\item Er zijn ready-made layouts ter ...
+\item Met slechts een paar, makkelijk ...
+\item Complexere onderdelen van een ...
+\item Met \LaTeX\ zal je een consistente ...
+\item \LaTeX\ is vrije software dus het ...
+\item \LaTeX\ is in tegenstelling tot ...
+\end{itemize}
+\end{verbatim}
+
+Deze code geeft het volgende resultaat.
+
+\begin{itemize}
+\item Er zijn ready-made layouts ter beschikking die uw documenten professioneel opmaken. 
+\item Met slechts een paar, makkelijk te leren, commando's kan men al aan de slag.
+\item Complexere onderdelen van een document (e.g. de inhoudstabel en de bibliografie) kunnen automatisch gegenereerd worden.
+\item Met \LaTeX\ zal je een consistente opmaak doorheen je document verkrijgen omdat de implementatie van die opmaak bepaald wordt door \'e\'en 'style-file' (denk aan HTML en CSS). 
+\item \LaTeX\ is vrije software dus het bevat enkel features die de gebruikers dienen en niemand houdt je tegen om het te delen.
+\item \LaTeX\ is, in tegenstelling tot wysiwyg-oplossingen, niet voor kinderen...
+\end{itemize}
+
+\section*{De hond mag uit de mand}
+
+Na het overlopen van al de voordelen van \LaTeX\ zal de lezer zich ongetwijfeld voelen zoals een hond die in zijn mand moet blijven zitten. Om dit gevoel te verhelpen kan de lezer allereerst beginnen met het installeren van de \LaTeX\ basis die te downloaden is op \url{http://miktex.org}. Er zijn ook gebruiksvriendelijke editors ter beschikking zoals \TeX maker en die kan makkelijk gedownload worden op \url{http://www.xm1math.net/texmaker/} (n.b. bij een eerste compilatie van een .tex bestand zullen er wel nog extra packages moeten ge\"installeerd worden en dat vraagt \'e\'enmalig extra tijd). Een uitgebreide cursus onder de GNU General Public Licence kan je vinden op \url{http://tobi.oetiker.ch/lshort/lshort.pdf}. Een nederlands alternatief van wikibooks staat op \url{http://nl.wikibooks.org/wiki/LaTeX}. Templates om uit te proberen zijn onder meer te vinden op \url{http://www.latextemplates.com/} (\textit{'Large Colored Title Article'} is de basis voor dit document).  
+\paragraph{}Curriculum vitae kunnen ook met behulp van \LaTeX\ zeer mooi opgemaakt worden. Bovendien zal de vermelding van \LaTeX\ bij de technische vaardigheden extra punten opleveren als sollicitant ontwikkelaar. Om de eerste kennismaking met \LaTeX\ te koppelen aan het zoeken naar een job kan er best met het \textit{'ModernCV' and Cover Letter} template gewerkt worden (dit is ook te vinden op de voornoemde locatie). In deze template zit ook een sollicitatiebrief verwerkt.\\~\\~\\
+
+Happy Hacking!
+
+
+
+
+\end{document}
