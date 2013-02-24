@@ -1,0 +1,396 @@
+\documentclass{beamer}
+
+\usepackage{verbatim}
+
+\usetheme{CambridgeUS}
+
+\usecolortheme{dolphin}
+
+%\setbeamertemplate{footline}[page number]
+
+\setbeamertemplate{navigation symbols}{}
+
+\title{Servlets en JSP}
+\subtitle{deel drie}
+\author{Java Cursisten}
+\institute{INTEC Brussel}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+
+\titlepage
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Overzicht}
+{\LARGE \tableofcontents}
+
+\end{frame}
+
+
+\section{Onzichtbare helper}
+
+
+\begin{frame}
+
+\frametitle{Onzichtbare helper}
+
+Als een request binnenkomt moet er iets of iemand de geassocieerde servlet instanti\"eren. De gewenste methode moet aangeroepen worden (doGet() of doPost()). En uiteraard moeten de HTTP request en de HTTP response meegegeven worden aan de voornoemde methodes. En...\\~\\
+
+Dit alles wordt gedaan door de {\LARGE \textbf{web Container}} (andere naam voor een servlet Container). 
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Waar is de main() method ?!}
+
+{\Large Servlets hebben \textbf{helemaal geen} main() method omdat ze \textbf{onder de
+controle} zijn van een andere Java applicatie die we de Container noemen.\\~\\
+
+Een voorbeeld van zo een web Container is Tomcat (het servlet Container gedeelte).\\~\\
+
+Als de web server een request binnenkrijgt die voor een servlet bedoelt is geeft
+die webserver die request niet rechtstreeks aan de servlet maar aan de web Container waar de servlet inzit. Deze Container bezorgt de request dan aan de juiste servlet waarna de Container de gewenste methode aanroept van die servlet. }
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Coming in (POV of server)}
+{\Large 
+\begin{enumerate}
+  \item Client stuurt een Get request naar een web server
+  \item De web server ziet dat geen request is naar een statische pagina dus geeft de request en een lege response door aan de web Container
+  \item De web Container onderzoekt welke servlet deze request en response moet verwerken, stuurt ze naar die servlet en roept de doGet() methode op
+\end{enumerate}
+}
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Going out (POV of server)}
+{\Large 
+\begin{enumerate}
+  \item De servlet en de JSP zorgen samen voor een JIT html pagina, stoppen die in de response en sturen die reponse terug naar de container
+  \item De Container geeft de response terug naar de web server
+  \item De web server stuurt de response naar de Client
+\end{enumerate}
+}
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Een goede Container is als een goede OS kernel}
+
+{\Large 
+
+\begin{enumerate}
+  \item Het is niet de bedoeling dat je het ooit te zien krijgt (zie je het wel dan is er iets serieus mis (i.e., \textbf{CRASH}))
+  \item Het zorgt voor de algemene 'plumbing' en controle zodat de gebruiker zich kan bezig houden met het implementeren van de use cases voor zijn applicatie.
+\end{enumerate}
+
+}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Concrete taken van de Container}
+{\Large 
+\begin{itemize}
+  \item Communicatie tussen de webserver en de servlets
+  \item Het leven en de dood van de servlets
+  \item Multithreading (more requests , more threads and no fuss!)
+  \item Security (kan geconfigureerd worden in de DD)
+  \item JSP Support (de Container maakt van jou JSP pagina een Java Class alsof het niets kost)
+\end{itemize}
+}
+\end{frame}
+
+\section{Expression Language (EL)}
+
+\begin{frame}[fragile]
+
+\frametitle{Expression Language bij primitieve types}
+
+Bij primitieve types zal EL de tekstvoorstelling gebruiken om te bepalen wat er in
+de response html zal komen te staan.\\~\\
+servlet code :
+\begin{verbatim}
+request.setAttribute("cursisten", 6);
+\end{verbatim}
+JSP code :
+\begin{verbatim}
+Er zijn ${cursisten} cursisten.
+\end{verbatim}
+response html :
+\begin{verbatim}
+Er zijn 6 cursisten.
+\end{verbatim}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Expression Language bij objecten}
+
+Bij objecten zal EL de toString methode gebruiken om te bepalen wat er in
+de response html zal komen te staan.\\~\\
+
+servlet code :
+\begin{verbatim}
+String cursisten = "zes";
+request.setAttribute("cursisten", cursisten);
+\end{verbatim}
+JSP code :
+\begin{verbatim}
+Er zijn ${cursisten} cursisten.
+\end{verbatim}
+response html :
+\begin{verbatim}
+Er zijn zes cursisten.
+\end{verbatim}
+
+\end{frame}
+
+
+\begin{frame}
+
+{\Large Wat als je met EL in JSP verwijst naar een request attribuut dat niet bestaat?\\~\\
+Geen fout maar een 'lege' tekst!}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Hardgecodeerde waarden}
+
+Je kan waarden hard coderen in een EL expressie :
+
+\begin{itemize}
+  \item gehele getallen \begin{verbatim}${42}\end{verbatim}
+  \item decimalen \begin{verbatim}${3.14}\end{verbatim}
+  \item strings \begin{verbatim}${"dubbel"} of ${'enkel'}\end{verbatim}
+  \item booleans \begin{verbatim}${true} of ${false}\end{verbatim}  
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Wiskundige operatoren}
+
+Er is een request attribuut \textit{'getal'} met de waarde 6
+
+\begin{itemize}
+  \item EL expressie met resultaat 10 \begin{verbatim}${getal + 4}\end{verbatim}
+  \item EL expressie met resultaat 5 \begin{verbatim}${getal - 1}\end{verbatim}
+  \item EL expressie met resultaat 18 \begin{verbatim}${getal * 3}\end{verbatim}
+  \item EL expressie met resultaat 1.5 \begin{verbatim}${getal / 4}\end{verbatim}
+  \item EL expressie met resultaat 2 \begin{verbatim}${getal % 4}\end{verbatim}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Vergelijkingsoperatoren}
+
+Er is een request attribuut \textit{'getal'} met de waarde 6
+
+\begin{itemize}
+  \item \textit{gelijk aan} - EL expressie met resultaat true
+  \begin{verbatim}${getal == 6}\end{verbatim}
+  \item \textit{niet gelijk aan} - EL expressie met resultaat false
+  \begin{verbatim}${getal != 6}\end{verbatim}
+  \item \textit{groter dan} - EL expressie met resultaat false
+  \begin{verbatim}${getal > 8}\end{verbatim}
+  \item \textit{groter of gelijk aan} - EL expressie met resultaat true
+  \begin{verbatim}${getal >= 4}\end{verbatim}
+  \item \textit{kleiner dan} - EL expressie met resultaat false
+  \begin{verbatim}${getal < 4}\end{verbatim}
+  \item \textit{kleiner of gelijk aan} - EL expressie met resultaat true
+  \begin{verbatim}${getal <= 18}\end{verbatim}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Logische operatoren}
+
+Er is een request attribuut \textit{'getal'} met de waarde 6
+
+\begin{itemize}
+  \item \textit{not} - EL expressie met resultaat false 
+  \begin{verbatim}${! (getal == 6) }\end{verbatim}
+  \item \textit{and} - EL expressie met resultaat true
+  \begin{verbatim}${getal > 1 && getal < 24}\end{verbatim}
+  \item \textit{or} - EL expressie met resultaat true
+  \begin{verbatim}${getal > 8 || getal < 7}\end{verbatim}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{conditionele operator \textbf{? :}}
+
+De syntax van de conditionele operator (algemeen)
+{\small
+\begin{verbatim}voorwaarde ? waardeAlsVoorwaardeTrue : waardeAlsVoorwaardeFalse\end{verbatim}
+}
+
+Er is een request attribuut \textit{'getal'} met de waarde 3.14\\~\\
+
+\textit{conditionele} - EL expressie met resultaat "Gelijk aan Pi!"
+\begin{verbatim}${getal == 3.14 ? "Gelijk aan Pi!" : "Niet gelijk aan Pi!"}\end{verbatim}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{\textit{'empty'} theorie}
+
+{\large \textit{'empty'} is een unary prefix operator om na te gaan of een waarde \textbf{null} of leeg is en geeft dus \textbf{true} terug als 
+
+\begin{itemize}
+  \item de expressie gelijk is aan \textbf{null}
+  \item de expressie een lege String is
+  \item de expressie een lege verzameling is (Array, List, Map)
+  \item de expressie de naam is van een onbestaand request attribuut
+\end{itemize}}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{\textit{'empty'} voorbeeld}
+
+{\large Er is een request attribuut \textit{'laatkomers'} dat een lege List is\\~\\
+
+servlet code :
+
+\begin{verbatim} request.setAttribute("laatkomers", new ArrayList()); \end{verbatim}
+
+JSP code :
+
+\begin{verbatim} ${empty laatkomers} \end{verbatim}
+
+resultaat :
+
+\begin{verbatim} true \end{verbatim}
+}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{element uit een Array ophalen}
+
+Met EL kan je een bepaalde waarde uit een Array halen met de volgende syntax
+
+\begin{verbatim}${naamVanHetRequestAttribuut[indexVanHetElement]}\end{verbatim}
+
+servlet code :
+
+\begin{verbatim}request.setAttribute("instructeurs", 
+new String[] {"Mohamed", "Kenneth", "Kevin"});\end{verbatim}
+
+JSP code om het eerste element te lezen :
+
+\begin{verbatim}${instructeurs[0]}\end{verbatim}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{element uit een List ophalen}
+
+{\large 
+Identieke wijze als bij een Array\\~\\
+
+servlet code :
+
+\begin{verbatim}
+List<String> instructeurs = Arrays.asList
+("Mohamed", "Kenneth", "Kevin");
+request.setAttribute("instructeurs", instructeurs);
+\end{verbatim}
+
+JSP code om het tweede element te lezen :
+
+\begin{verbatim}
+${instructeurs[1]}
+\end{verbatim}
+}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{element uit een Map ophalen}
+
+{\large 
+Identieke wijze als bij een Array buiten het feit dat je ipv een index de key moet meegeven\\~\\
+
+
+servlet code :
+
+\begin{verbatim}
+Map<String, String> eigenschappen = 
+new HashMap<String, String>();
+eigenschappen.put("Java", "awesome");
+eigenschappen.put(".NET", "notSoAwesome");
+request.setAttribute("eigenschappen", eigenschappen);
+\end{verbatim}
+
+JSP code om het element met de key "Java" te lezen :
+
+\begin{verbatim}
+${eigenschappen["Java"]}
+\end{verbatim}
+}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{resultaat van een method call}
+{\large 
+Je kan method calls van objecten uitvoeren vanuit JSP met EL\\~\\
+
+servlet code :
+
+\begin{verbatim}request.setAttribute("EenStringObject", "Object");\end{verbatim}
+
+JSP code om de lengte van het String object te verkrijgen
+
+\begin{verbatim}${EenStringObject.length()}\end{verbatim}
+}
+\end{frame}
+
+
+\end{document}
